@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "../requests_handler/requests_handler.hpp"
-#include "../requests_handler/response.hpp"
+#include "../src/lib/requests_handler/requests_handler.hpp"
+#include "../src/lib/requests_handler/response.hpp"
 
 
 
