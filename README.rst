@@ -18,7 +18,7 @@ Intalling conan
 
 Building the Module
 ---------------------
-* git git clone --recursive https://github.com/sharonen/RateLimitingRequestsModule.git
+* git clone --recursive https://github.com/sharonen/RateLimitingRequestsModule.git
 * cd RateLimitingRequestsModule
 * mkdir build && cd build
 * conan install ..
