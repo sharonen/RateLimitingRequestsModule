@@ -1,6 +1,6 @@
-================
-RequesterModule
-================
+==========================
+RateLimitingRequestsModule
+==========================
 
 Prerequisites 
 -------------
@@ -16,9 +16,9 @@ Intalling conan
 * pip install conan
 * conan remote add bincrafters 'https://api.bintray.com/conan/bincrafters/public-conan'
 
-Building the binaries
+Building the Module
 ---------------------
-* git git clone --recursive https://github.com/sharonen/RequesterModule.git
+* git git clone --recursive https://github.com/sharonen/RateLimitingRequestsModule.git
 * cd RateLimitingRequestsModule
 * mkdir build && cd build
 * conan install ..
