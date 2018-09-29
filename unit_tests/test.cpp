@@ -57,7 +57,7 @@ TEST_CASE("checking the limit of requests")
 			  REQUIRE(reps.code == ErrorCode::ok);
 		  }
 		  reps = pRequestsHandler->handleNewRequest(url);
-		  THEN("the method returns error code too many requests"){
+		  THEN("the method returns an error code too many requests (HTTP error code 429)"){
 			  REQUIRE(reps.code == ErrorCode::TooManyRequests);
 		  }
 	  }
@@ -89,5 +89,29 @@ TEST_CASE("checking the update requests limit")
   }
 }
 
+
+TEST_CASE("checking the url requests ")
+{
+  GIVEN("a Requests Handle"){
+	  Response reps;
+
+	  RequestsHadler* pRequestsHandler = new RequestsHadler(10, 2);
+	  REQUIRE(pRequestsHandler->current_requests_limit()== 10);
+	  WHEN("requesting a correct URL request"){
+		  std::string url = "www.google.com";
+		  reps = pRequestsHandler->handleNewRequest(url);
+		  THEN("the method returns okay (HTTP code 200)"){
+			  REQUIRE(reps.code == ErrorCode::ok);
+		  }
+	  }
+	  WHEN("requesting a worng URL request"){
+		  std::string url = "www.no_such_url_fot_testing.com";
+		  reps = pRequestsHandler->handleNewRequest(url);
+		  THEN("the method returns an error code bad request (HTTP error code 400)"){
+			  REQUIRE(reps.code == ErrorCode::BadRequest);
+		  }
+	  }
+  }
+}
 
 

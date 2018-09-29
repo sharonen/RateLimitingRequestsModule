@@ -8,6 +8,7 @@
 #include <boost/asio/steady_timer.hpp>
 #include <boost/system/error_code.hpp>
 #include <boost/bind.hpp>
+#include "curl/curl.h"
 
 using namespace std;
 
@@ -28,7 +29,15 @@ private:
 class RequestsHadler {
 public:
 
-	RequestsHadler():requests_limit_(100), timer_rate_in_sec_(60){}
+	RequestsHadler():requests_limit_(100), timer_rate_in_sec_(60){
+		curl_global_init( CURL_GLOBAL_ALL );
+		curlHandle_ = curl_easy_init();
+	}
+
+	~RequestsHadler(){
+		curl_easy_cleanup(curlHandle_);
+		curl_global_cleanup();
+	}
 
 	RequestsHadler(int requests_limit, int timer_rate_in_sec);
 	/*
@@ -69,16 +78,25 @@ public:
 	void updateRequestsLimit(boost::asio::deadline_timer* timer);
 
 	/*
+	 * Sets a curl option with the url HTTP request.
+	 * @param url - the url HTTP request
+	 * @return true is the curl library was able to set the url 
+	 * request. Otherwise, false
+	 */
+	bool setURL( const string & url );
+
+	/*
 	 * Handles new requests and check if the number of
 	 * requests reached the limit.
 	 * @param url - the url HTTP request
 	 */
-	Response handleNewRequest(string& url);
+	Response handleNewRequest(const string & url);
 
 private:
 	int requests_limit_;
 	int current_requests_limit_;
 	int timer_rate_in_sec_;
+	CURL * curlHandle_;
 };
 
 #endif

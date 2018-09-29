@@ -6,5 +6,6 @@ class RequesterModuleConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     requires = ("catch2/2.1.1@bincrafters/stable",
                 "trompeloeil/v29@rollbear/stable",
-                "boost_asio/1.66.0@bincrafters/stable")
+                "boost_asio/1.66.0@bincrafters/stable",
+                "libcurl/7.56.1@bincrafters/stable")
     generators = "cmake", "cmake_multi"
