@@ -64,14 +64,6 @@ public:
 	void updateRequestsLimit(boost::asio::deadline_timer* timer);
 
 	/*
-	 * Sets a curl option with the url HTTP request.
-	 * @param url - the url HTTP request
-	 * @return true is the curl library was able to set the url 
-	 * request. Otherwise, false
-	 */
-	bool setURL( const string & url );
-
-	/*
 	 * Handles new requests and check if the number of
 	 * requests reached the limit.
 	 * @param url - the url HTTP request
@@ -79,6 +71,14 @@ public:
 	Response handleNewRequest(const string & url);
 
 private:
+	/*
+	 * Sets a curl option with the url HTTP request.
+	 * @param url - the url HTTP request
+	 * @return true is the curl library was able to set the url
+	 * request. Otherwise, false
+	 */
+	bool setURL( const string & url );
+
 	int requests_limit_;
 	int current_requests_limit_;
 	int timer_rate_in_sec_;

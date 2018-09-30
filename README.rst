@@ -22,6 +22,8 @@ Members:
 
 * handleNewRequest  - this method receives a URL request and checks if the number of requests reached its limit. If not, the method returns a response object with error code 200 (okay) and empty error message. If yes, the method returns a response object with error code 429 (too many requests) and error message "Rate limit exceeded. Try again in #(n) seconds".
 
+* updateRequestsLimit - this method updates current_requests_limit to be requests_limit after the timer expired.
+
 
 Prerequisites 
 -------------
