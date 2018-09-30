@@ -18,12 +18,14 @@ RequestsHadler::RequestsHadler(int requests_limit, int timer_rate_in_sec) :
 
 
 void RequestsHadler::requests_limit(int requests_limit){
+	std::lock_guard<std::mutex> guard(mu_);
 	//requests_limit can't be negative
 	assert(requests_limit > 0);
 	requests_limit_ = requests_limit;
 }
 
 void RequestsHadler::timer_rate_in_sec(int timer_rate_in_sec){
+	std::lock_guard<std::mutex> guard(mu_);
 	//timer_rate_in_sec can't be negative
 	assert(timer_rate_in_sec > 0);
 	timer_rate_in_sec_ = timer_rate_in_sec;
@@ -37,6 +39,7 @@ bool RequestsHadler::setURL( const string & url )
 
 Response RequestsHadler::handleNewRequest(const string & url){
 	ostringstream oss;
+	std::lock_guard<std::mutex> guard(mu_);
 	//handles the requests. if the number of requests reached the limit
 	// an error code 429 and a an error message will be return
 	if(current_requests_limit_ == 0){
@@ -63,6 +66,7 @@ Response RequestsHadler::handleNewRequest(const string & url){
 void RequestsHadler::updateRequestsLimit(boost::asio::deadline_timer* timer ){
 	//After the rate time passed,
 	//updating the current requests limit to be the requests limit
+	std::lock_guard<std::mutex> guard(mu_);
 	current_requests_limit_ = requests_limit_;
 	boost::posix_time::seconds interval(timer_rate_in_sec_);
 	timer->expires_at(timer->expires_at() + interval);

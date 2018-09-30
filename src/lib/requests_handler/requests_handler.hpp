@@ -9,21 +9,7 @@
 #include <boost/system/error_code.hpp>
 #include <boost/bind.hpp>
 #include "curl/curl.h"
-
-using namespace std;
-
-
-
-class Timer{
-public:
-	Timer(boost::asio::steady_timer* pTimer): pTimer_(std::move(pTimer)){}
-
-	boost::asio::steady_timer* pTimer() {return pTimer_;}
-
-
-private:
-	boost::asio::steady_timer* pTimer_;
-};
+#include <mutex>
 
 
 class RequestsHadler {
@@ -97,6 +83,7 @@ private:
 	int current_requests_limit_;
 	int timer_rate_in_sec_;
 	CURL * curlHandle_;
+	std::mutex mu_;
 };
 
 #endif
